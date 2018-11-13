@@ -1,0 +1,6 @@
+[package]
+name = "mcts-tic-tac-toe"
+version = "0.1.0"
+authors = ["Aleksander Gondek"]
+
+[dependencies]
