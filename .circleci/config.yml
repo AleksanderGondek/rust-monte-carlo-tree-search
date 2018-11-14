@@ -1,0 +1,17 @@
+version: 2
+jobs:
+    build_tick_tac_toe:
+        working_directory: ~/tic-tac-toe
+        docker:
+            - image: rust:latest
+        steps:
+            - checkout
+            - run:
+                name: Build Tic Tac Toe application
+                command: cargo build
+    
+workflows:
+    version: 2
+    tests:
+        jobs:
+            - build_tick_tac_toe
