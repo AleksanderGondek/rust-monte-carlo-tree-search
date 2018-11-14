@@ -1,15 +1,15 @@
 version: 2
 jobs:
     build_tick_tac_toe:
-        working_directory: ~/tic-tac-toe
+        working_directory: ~/rust-monte-carlo-tree-search
         docker:
             - image: rust:latest
         steps:
             - checkout
             - run:
                 name: Build Tic Tac Toe application
+                working_directory: ~/rust-monte-carlo-tree-search/tic-tac-toe
                 command: cargo build
-    
 workflows:
     version: 2
     tests:
