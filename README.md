@@ -1,2 +1,6 @@
-# rust-monte-carlo-tree-search
+rust-monte-carlo-tree-search
+===
+![Rust-1.30.1](https://img.shields.io/badge/Rust-1.30.1-orange.svg?style=flat-square)
+![License](https://img.shields.io/badge/License-Apache%20License%202.0-blue.svg?style=flat-square)
+
 Contains various implementations of Monte-Carlo-Tree-Search
