@@ -1,1 +1,1 @@
-pub mod rust_mcts;
+pub mod tic_tac_toe;
