@@ -1,6 +1,6 @@
 version: 2
 jobs:
-    build:
+    build_and_test:
         working_directory: ~/rust-monte-carlo-tree-search
         docker:
             - image: rust:latest
@@ -10,8 +10,12 @@ jobs:
                 name: Build application
                 working_directory: ~/rust-monte-carlo-tree-search
                 command: cargo build
+            - run:
+                name: Run the tests
+                working_directory: ~/rust-monte-carlo-tree-search
+                command: cargo test
 workflows:
     version: 2
     tests:
         jobs:
-            - build
+            - build_and_test
