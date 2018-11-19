@@ -4,3 +4,4 @@ version = "0.1.0"
 authors = ["Aleksander Gondek"]
 
 [dependencies]
+indextree = "3.0.0"
