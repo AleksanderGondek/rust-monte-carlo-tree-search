@@ -1,5 +1,4 @@
 use std::fmt::Write;
-use std::string;
 
 pub enum BoardCellState {
     Empty,
