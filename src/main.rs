@@ -12,11 +12,21 @@ fn main() {
         let mut player_move = String::new();
         io::stdin().read_line(&mut player_move).expect("Failed to read line");
         
-        match player_move {
-            _ => {
-                println!("Exiting!");
-                break;
-            }
+        let possible_field_number: Result<u32, std::num::ParseIntError> = player_move.trim().parse(); 
+        match possible_field_number {
+            Ok(0) => println!("Please provide number from range <1,9>."),
+            Ok(1 ..= 9) => println!("Valid move."),
+            Ok(_) => println!("Please provide number from range <1,9> or type 'quit' to exit."),
+            Err(_) => {
+                match player_move.trim().as_ref() {
+                    "quit" => {
+                        println!("Exiting, bye!");
+                        break;
+                    }
+                    _ => println!("Invalid command. Type 'quit' to exit."),
+                }
+            },
         }
     }
 }
+    
