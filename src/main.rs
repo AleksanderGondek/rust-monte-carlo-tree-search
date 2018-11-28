@@ -3,7 +3,7 @@ extern crate rust_mcts;
 use std::io;
 
 fn main() {
-    let game_of_ttt = rust_mcts::tic_tac_toe::game::new();
+    let mut game_of_ttt = rust_mcts::tic_tac_toe::game::new();
     
     loop {
         println!("{}", game_of_ttt);
@@ -12,10 +12,12 @@ fn main() {
         let mut player_move = String::new();
         io::stdin().read_line(&mut player_move).expect("Failed to read line");
         
-        let possible_field_number: Result<u32, std::num::ParseIntError> = player_move.trim().parse(); 
+        let possible_field_number: Result<usize, std::num::ParseIntError> = player_move.trim().parse(); 
         match possible_field_number {
             Ok(0) => println!("Please provide number from range <1,9>."),
-            Ok(1 ..= 9) => println!("Valid move."),
+            Ok(x @ 1 ..= 9) => {                
+                game_of_ttt.make_move(x - 1);
+            },
             Ok(_) => println!("Please provide number from range <1,9> or type 'quit' to exit."),
             Err(_) => {
                 match player_move.trim().as_ref() {

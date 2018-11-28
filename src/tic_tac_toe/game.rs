@@ -6,6 +6,12 @@ pub enum BoardCellState {
     O
 }
 
+#[derive(PartialEq)]
+pub enum Player {
+    First,
+    Second
+}
+
 impl std::fmt::Display for BoardCellState {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let cell_repr: String;
@@ -25,7 +31,34 @@ impl std::fmt::Display for BoardCellState {
 }
 
 pub struct TicTacToe {
-    board_state: [[BoardCellState; 3]; 3]
+    board_state: [[BoardCellState; 3]; 3],
+    current_player: Player
+}
+
+impl TicTacToe {
+    pub fn make_move(&mut self, tic_location: usize) {
+        match tic_location {
+            0 ..= 2 => {
+                self.board_state[0][tic_location] = if self.current_player == Player::First { BoardCellState::X } else { BoardCellState::O };
+            }
+            3 ..= 5 => {
+                self.board_state[1][tic_location % 3] = if self.current_player == Player::First { BoardCellState::X } else { BoardCellState::O };
+            }
+            6 ..= 8 => {
+                self.board_state[2][tic_location % 3] = if self.current_player == Player::First { BoardCellState::X } else { BoardCellState::O };
+            }
+            _ => {
+                ;
+            }
+        }
+
+        if self.current_player == Player::First {
+            self.current_player = Player::Second;
+        }
+        else {
+            self.current_player = Player::First;
+        }
+    }
 }
 
 impl std::fmt::Display for TicTacToe {
@@ -56,7 +89,8 @@ pub fn new() -> TicTacToe {
             [BoardCellState::Empty, BoardCellState::Empty, BoardCellState::Empty],
             [BoardCellState::Empty, BoardCellState::Empty, BoardCellState::Empty],
             [BoardCellState::Empty, BoardCellState::Empty, BoardCellState::Empty],
-        ]
+        ],
+        current_player: Player::First
     }
 }
 
