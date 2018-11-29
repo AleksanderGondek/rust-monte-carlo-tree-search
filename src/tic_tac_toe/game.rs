@@ -1,5 +1,6 @@
 use std::fmt::Write;
 
+#[derive(PartialEq)]
 pub enum BoardCellState {
     Empty,
     X,
@@ -36,15 +37,41 @@ pub struct TicTacToe {
 }
 
 impl TicTacToe {
+    fn is_cell_taken(&self, tic_location: usize) -> bool {
+        match tic_location {
+            0 ..= 2 => {
+                return self.board_state[0][tic_location] != BoardCellState::Empty;
+            }
+            3 ..= 5 => {
+                return self.board_state[1][tic_location % 3] != BoardCellState::Empty;
+            }
+            6 ..= 8 => {
+                return self.board_state[2][tic_location % 3] != BoardCellState::Empty;
+            }
+            _ => {
+                return false;
+            }
+        }
+    }
+
     pub fn make_move(&mut self, tic_location: usize) {
         match tic_location {
             0 ..= 2 => {
+                if self.is_cell_taken(tic_location) {
+                    return;
+                }
                 self.board_state[0][tic_location] = if self.current_player == Player::First { BoardCellState::X } else { BoardCellState::O };
             }
             3 ..= 5 => {
+                if self.is_cell_taken(tic_location) {
+                    return;
+                }
                 self.board_state[1][tic_location % 3] = if self.current_player == Player::First { BoardCellState::X } else { BoardCellState::O };
             }
             6 ..= 8 => {
+                if self.is_cell_taken(tic_location) {
+                    return;
+                }
                 self.board_state[2][tic_location % 3] = if self.current_player == Player::First { BoardCellState::X } else { BoardCellState::O };
             }
             _ => {
