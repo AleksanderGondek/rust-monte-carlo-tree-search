@@ -31,9 +31,24 @@ impl std::fmt::Display for BoardCellState {
     }
 }
 
+impl std::fmt::Display for Player {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let player_repr: String;
+        match self {
+            Player::First => {
+                player_repr = String::from("X")
+            },
+            Player::Second => {
+                player_repr = String::from("O")
+            }
+        }
+        return write!(f, "{}", player_repr)
+    }
+}
+
 pub struct TicTacToe {
     board_state: [[BoardCellState; 3]; 3],
-    current_player: Player
+    pub current_player: Player
 }
 
 impl TicTacToe {
@@ -52,6 +67,19 @@ impl TicTacToe {
                 return false;
             }
         }
+    }
+
+    fn check_win_condition(&self, cell_mark: BoardCellState) -> bool {
+        // There has to be a better way! This is terrible..
+        let brd = &self.board_state;
+        return ((brd[0][0] == cell_mark) && (brd[0][0] == brd[0][1]) && (brd[0][1] == brd[0][2])) ||
+            ((brd[1][0] == cell_mark) && (brd[1][0] == brd[1][1]) && (brd[1][1] == brd[1][2])) ||
+            ((brd[2][0] == cell_mark) && (brd[2][0] == brd[2][1]) && (brd[2][1] == brd[2][2])) ||
+            ((brd[0][0] == cell_mark) && (brd[0][0] == brd[1][0]) && (brd[1][0] == brd[2][0])) ||
+            ((brd[1][0] == cell_mark) && (brd[1][0] == brd[1][0]) && (brd[1][0] == brd[1][0])) ||
+            (((brd[2][0] == cell_mark) && brd[2][0] == brd[2][1]) && (brd[2][1] == brd[2][2])) ||
+            ((brd[0][0] == cell_mark) && (brd[0][0] == brd[1][1]) && (brd[1][1] == brd[2][2])) ||
+            ((brd[0][2] == cell_mark) && (brd[0][2] == brd[1][1]) && (brd[1][1] == brd[2][0]));
     }
 
     pub fn make_move(&mut self, tic_location: usize) {
@@ -84,6 +112,15 @@ impl TicTacToe {
         }
         else {
             self.current_player = Player::First;
+        }
+    }
+
+    pub fn current_player_wins(&self) -> bool {
+        if self.current_player == Player::First {
+            return self.check_win_condition(BoardCellState::X);
+        }
+        else {
+            return self.check_win_condition(BoardCellState::O);
         }
     }
 }

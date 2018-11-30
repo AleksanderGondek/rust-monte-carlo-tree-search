@@ -8,7 +8,7 @@ fn main() {
     loop {
         println!("{}", game_of_ttt);
 
-        println!("Your move!");
+        println!("Player {} move!", game_of_ttt.current_player);
         let mut player_move = String::new();
         io::stdin().read_line(&mut player_move).expect("Failed to read line");
         
@@ -28,6 +28,13 @@ fn main() {
                     _ => println!("Invalid command. Type 'quit' to exit."),
                 }
             },
+        }
+
+        if game_of_ttt.current_player_wins() {
+            println!("Player {} wins!", game_of_ttt.current_player);
+            println!("Type anything to quit.");
+            io::stdin().read_line(&mut player_move).expect("Failed to read line");
+            break;
         }
     }
 }
