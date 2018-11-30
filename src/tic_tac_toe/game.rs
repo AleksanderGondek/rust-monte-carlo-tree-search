@@ -72,14 +72,15 @@ impl TicTacToe {
     fn check_win_condition(&self, cell_mark: BoardCellState) -> bool {
         // There has to be a better way! This is terrible..
         let brd = &self.board_state;
-        return ((brd[0][0] == cell_mark) && (brd[0][0] == brd[0][1]) && (brd[0][1] == brd[0][2])) ||
+        return 
+            ((brd[0][0] == cell_mark) && (brd[0][0] == brd[0][1]) && (brd[0][1] == brd[0][2])) ||
             ((brd[1][0] == cell_mark) && (brd[1][0] == brd[1][1]) && (brd[1][1] == brd[1][2])) ||
             ((brd[2][0] == cell_mark) && (brd[2][0] == brd[2][1]) && (brd[2][1] == brd[2][2])) ||
             ((brd[0][0] == cell_mark) && (brd[0][0] == brd[1][0]) && (brd[1][0] == brd[2][0])) ||
-            ((brd[1][0] == cell_mark) && (brd[1][0] == brd[1][0]) && (brd[1][0] == brd[1][0])) ||
-            (((brd[2][0] == cell_mark) && brd[2][0] == brd[2][1]) && (brd[2][1] == brd[2][2])) ||
+            ((brd[0][1] == cell_mark) && (brd[0][1] == brd[1][1]) && (brd[1][1] == brd[2][1])) ||
+            ((brd[0][2] == cell_mark) && (brd[0][2] == brd[1][2]) && (brd[1][2] == brd[2][2])) ||
             ((brd[0][0] == cell_mark) && (brd[0][0] == brd[1][1]) && (brd[1][1] == brd[2][2])) ||
-            ((brd[0][2] == cell_mark) && (brd[0][2] == brd[1][1]) && (brd[1][1] == brd[2][0]));
+            ((brd[0][2] == cell_mark) && (brd[0][2] == brd[1][1]) && (brd[1][1] == brd[2][0]))
     }
 
     pub fn make_move(&mut self, tic_location: usize) {
