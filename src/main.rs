@@ -6,6 +6,7 @@ fn main() {
     let mut game_of_ttt = rust_mcts::tic_tac_toe::game::new();
     
     loop {
+        print!("{}[2J", 27 as char);
         println!("{}", game_of_ttt);
 
         println!("Player {} move!", game_of_ttt.current_player());
