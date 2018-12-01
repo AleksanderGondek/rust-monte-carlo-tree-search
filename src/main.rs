@@ -8,7 +8,7 @@ fn main() {
     loop {
         println!("{}", game_of_ttt);
 
-        println!("Player {} move!", game_of_ttt.current_player);
+        println!("Player {} move!", game_of_ttt.current_player());
         let mut player_move = String::new();
         io::stdin().read_line(&mut player_move).expect("Failed to read line");
         
@@ -17,6 +17,7 @@ fn main() {
             Ok(0) => println!("Please provide number from range <1,9>."),
             Ok(x @ 1 ..= 9) => {                
                 game_of_ttt.make_move(x - 1);
+                game_of_ttt.toggle_current_player();
             },
             Ok(_) => println!("Please provide number from range <1,9> or type 'quit' to exit."),
             Err(_) => {
@@ -31,7 +32,7 @@ fn main() {
         }
 
         if game_of_ttt.current_player_wins() {
-            println!("Player {} wins!", game_of_ttt.current_player);
+            println!("Player {} wins!", game_of_ttt.current_player());
             println!("Type anything to quit.");
             io::stdin().read_line(&mut player_move).expect("Failed to read line");
             break;

@@ -48,7 +48,7 @@ impl std::fmt::Display for Player {
 
 pub struct TicTacToe {
     board_state: [[BoardCellState; 3]; 3],
-    pub current_player: Player
+    current_player: Player
 }
 
 impl TicTacToe {
@@ -83,6 +83,19 @@ impl TicTacToe {
             ((brd[0][2] == cell_mark) && (brd[0][2] == brd[1][1]) && (brd[1][1] == brd[2][0]))
     }
 
+    pub fn toggle_current_player(&mut self) {
+        if self.current_player == Player::First {
+            self.current_player = Player::Second;
+        }
+        else {
+            self.current_player = Player::First;
+        }
+    }
+
+    pub fn current_player(&self) -> &Player {
+        return &self.current_player;
+    }
+
     pub fn make_move(&mut self, tic_location: usize) {
         match tic_location {
             0 ..= 2 => {
@@ -106,13 +119,6 @@ impl TicTacToe {
             _ => {
                 ;
             }
-        }
-
-        if self.current_player == Player::First {
-            self.current_player = Player::Second;
-        }
-        else {
-            self.current_player = Player::First;
         }
     }
 
