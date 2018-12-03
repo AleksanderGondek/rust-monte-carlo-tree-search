@@ -10,17 +10,17 @@ fn main() {
         println!("{}", game_of_ttt);
 
         println!("Player {} move!", game_of_ttt.current_player());
+        println!("Possible moves are: {:?}", game_of_ttt.get_possible_moves());
         let mut player_move = String::new();
         io::stdin().read_line(&mut player_move).expect("Failed to read line");
         
         let possible_field_number: Result<usize, std::num::ParseIntError> = player_move.trim().parse(); 
         match possible_field_number {
-            Ok(0) => println!("Please provide number from range <1,9>."),
-            Ok(x @ 1 ..= 9) => {                
-                game_of_ttt.make_move(x - 1);
+            Ok(x @ 0 ..= 8) => {                
+                game_of_ttt.make_move(x);
                 game_of_ttt.toggle_current_player();
             },
-            Ok(_) => println!("Please provide number from range <1,9> or type 'quit' to exit."),
+            Ok(_) => println!("Please provide number from range <1,8> or type 'quit' to exit."),
             Err(_) => {
                 match player_move.trim().as_ref() {
                     "quit" => {

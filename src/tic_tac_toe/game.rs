@@ -130,6 +130,33 @@ impl TicTacToe {
             return self.check_win_condition(BoardCellState::O);
         }
     }
+
+    pub fn get_possible_moves(&self) -> Vec<usize> {
+        let mut moves = Vec::new();
+        for (i, row) in self.board_state.iter().enumerate() {
+            for (j, cell) in row.iter().enumerate() {
+                if *cell != BoardCellState::Empty {
+                    continue;
+                }
+
+                match i {
+                    0 => {
+                        moves.push(j);
+                    },
+                    1 => {
+                        moves.push(3+j);
+                    }
+                    2 => {
+                        moves.push(6+j);
+                    },
+                    _ => { ; }
+                }
+                
+            }
+        }
+
+        return moves;
+    }
 }
 
 impl std::fmt::Display for TicTacToe {
