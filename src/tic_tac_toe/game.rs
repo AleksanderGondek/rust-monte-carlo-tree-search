@@ -140,16 +140,10 @@ impl TicTacToe {
                 }
 
                 match i {
-                    0 => {
-                        moves.push(j);
-                    },
-                    1 => {
-                        moves.push(3+j);
-                    }
-                    2 => {
-                        moves.push(6+j);
-                    },
-                    _ => { ; }
+                    0 => moves.push(j),
+                    1 => moves.push(3+j),
+                    2 => moves.push(6+j),
+                    _ => { ; },
                 }
                 
             }
