@@ -10,7 +10,15 @@ fn main() {
         println!("{}", game_of_ttt);
 
         println!("Player {} move!", game_of_ttt.current_player());
-        println!("Possible moves are: {:?}", game_of_ttt.get_possible_moves());
+        
+        let possible_moves = game_of_ttt.get_possible_moves();
+        println!("Possible moves are: {:?}", possible_moves);
+        if possible_moves.len() <= 0 {
+            println!("No more possible moves left!");
+            break;
+        }
+        
+        
         let mut player_move = String::new();
         io::stdin().read_line(&mut player_move).expect("Failed to read line");
         
