@@ -3,9 +3,6 @@ use super::super::game::Game;
 
 use std::fmt::Write;
 
-static PLAYER_ONE_MARK: Player = Player::One(String::from("X"));
-static PLAYER_TWO_MARK: Player = Player::One(String::from("O"));
-
 static WINNING_POSITIONS: [[usize; 3]; 8] = [
     [0,1,2],
     [3,4,5],
@@ -19,7 +16,8 @@ static WINNING_POSITIONS: [[usize; 3]; 8] = [
 
 pub struct GameOfTicTacToe {
     board_state: [Option<Player>; 9],
-    current_player: Player
+    current_player: Player,
+    players: Vec<Player>,
 }
 
 impl Game for GameOfTicTacToe {
@@ -33,8 +31,8 @@ impl Game for GameOfTicTacToe {
             let mut all_positions_are_a_match = true;
             for index in winning_position.iter() {
                 match board[*index] {
-                    Some(mark) => {
-                        all_positions_are_a_match = all_positions_are_a_match && (mark == self.current_player);
+                    Some(ref mark) => {
+                        all_positions_are_a_match = all_positions_are_a_match && (*mark == self.current_player);
                     },
                     _ => { ; },
                 }
@@ -47,6 +45,7 @@ impl Game for GameOfTicTacToe {
 
         return false;
     }
+
 
     fn possible_moves(&self) -> Vec<String> {
         let mut moves = Vec::new();
@@ -62,7 +61,7 @@ impl Game for GameOfTicTacToe {
     fn make_move(&mut self, move_to_make: String) {
         match move_to_make.parse::<usize>() {
             Ok(x) => {
-                 self.board_state[x % 9] = Some(self.current_player);
+                 self.board_state[x % 9] = Some(self.current_player.clone());
             },
             Err(_) => { return; },
         }
