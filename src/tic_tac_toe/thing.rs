@@ -60,7 +60,7 @@ impl Game for GameOfTicTacToe {
     }
 
     fn make_move(&mut self, move_to_make: String) {
-        match move_to_make.parse::<usize>() {
+        match move_to_make.trim().parse::<usize>() {
             Ok(x) => {
                  self.board_state[x % 9] = Some(self.current_player().clone());
             },
