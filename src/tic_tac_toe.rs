@@ -59,13 +59,20 @@ impl Game for GameOfTicTacToe {
         return false;
     }
 
-    fn make_move(&mut self, move_to_make: String) {
+    fn make_move(&mut self, move_to_make: String) -> bool {
         match move_to_make.trim().parse::<usize>() {
             Ok(x) => {
-                 self.board_state[x % 9] = Some(self.current_player().clone());
+                let target_index = x % 9;
+                if self.board_state[target_index].is_some() {
+                    return false;
+                }
+
+                self.board_state[x % 9] = Some(self.current_player().clone());
             },
-            Err(_) => { return; },
+            Err(_) => { return false; },
         }
+
+        return true;
     }
 
     fn possible_moves(&self) -> Vec<String> {

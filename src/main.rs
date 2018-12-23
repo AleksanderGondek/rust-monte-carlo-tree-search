@@ -31,7 +31,11 @@ fn main() {
                 break;
             },
             y => {
-                game_of_ttt.make_move(y);
+                let move_successful = game_of_ttt.make_move(y);
+                if !move_successful {
+                    continue;
+                }
+
                 if game_of_ttt.current_player_won() {
                     let mut any_input = String::new();
                     println!("Player {:?} wins!", game_of_ttt.current_player());
