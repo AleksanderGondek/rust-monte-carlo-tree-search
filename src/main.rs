@@ -12,7 +12,7 @@ fn main() {
         print!("{}[2J", 27 as char);
         println!("{}", game_of_ttt);
 
-        println!("Player {:?} move!", game_of_ttt.current_player());
+        println!("Player {} move!", game_of_ttt.current_player());
         
         let possible_moves = game_of_ttt.possible_moves();
         println!("Possible moves are: {:?}", possible_moves);

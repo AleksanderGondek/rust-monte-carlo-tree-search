@@ -81,10 +81,10 @@ impl Game for GameOfTicTacToe {
 
     fn set_next_player(&mut self) {
         match self.current_player_index {
-            i if i <= (self.players.len() - 1) => {
+            i if i < (self.players.len() - 1) => {
                 self.current_player_index += 1;
             },
-            i if i == self.players.len() => {
+            i if i == (self.players.len() - 1) => {
                 self.current_player_index = 0;
             },
             _ => { ; }
@@ -93,20 +93,40 @@ impl Game for GameOfTicTacToe {
 
 }
 
+impl std::fmt::Display for Player {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Player::One(name) => { 
+                write!(f, "{}", name)
+            },
+            Player::Two(name) => {
+                write!(f, "{}", name)
+            }
+        }
+    }
+}
+
 impl std::fmt::Display for GameOfTicTacToe {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let mut board_repr = String::new();
 
         for (i, cell) in self.board_state.iter().enumerate() {
-            write!(board_repr, " {:?} ", cell); 
+            match cell {
+                Some(player) => {
+                    write!(board_repr, " {} ", player);
+                },
+                _ => {
+                    write!(board_repr, "   ");
+                }
+            }
 
-            let is_last_col = (i % 3 == 2);
+            let is_last_col = i % 3 == 2;
             if !is_last_col {
                 board_repr.push_str("|");
             }
 
             match i {
-                2 | 5 => { board_repr.push_str("\n--------------------\n"); },
+                2 | 5 => { board_repr.push_str("\n-----------\n"); },
                 8 => { board_repr.push_str("\n"); },
                 _ => { ; },
             }
