@@ -100,13 +100,14 @@ impl std::fmt::Display for GameOfTicTacToe {
         for (i, cell) in self.board_state.iter().enumerate() {
             write!(board_repr, " {:?} ", cell); 
 
-            let is_last_col = (i % 3 == 0) && i != 0;
+            let is_last_col = (i % 3 == 2);
             if !is_last_col {
                 board_repr.push_str("|");
             }
 
             match i {
-                2 | 5 | 8 => { board_repr.push_str("\n-----------\n"); },
+                2 | 5 => { board_repr.push_str("\n--------------------\n"); },
+                8 => { board_repr.push_str("\n"); },
                 _ => { ; },
             }
         }
