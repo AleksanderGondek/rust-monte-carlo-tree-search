@@ -4,9 +4,9 @@ use std::io;
 
 fn main() {
     use rust_mcts::game::Game;
-    use rust_mcts::game::Player;
+    use rust_mcts::tic_tac_toe::GameOfTicTacToe;
 
-    let mut game_of_ttt = rust_mcts::tic_tac_toe::thing::GameOfTicTacToe::new();
+    let mut game_of_ttt = GameOfTicTacToe::new();
     
     loop {
         print!("{}[2J", 27 as char);

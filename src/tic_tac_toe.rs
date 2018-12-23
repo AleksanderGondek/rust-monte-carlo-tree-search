@@ -1,7 +1,7 @@
-use super::super::game::Player; //?
-use super::super::game::Game;
-
 use std::fmt::Write;
+
+use super::game::Player;
+use super::game::Game;
 
 static WINNING_POSITIONS: [[usize; 3]; 8] = [
     [0,1,2],
