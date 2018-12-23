@@ -3,13 +3,16 @@ extern crate rust_mcts;
 use std::io;
 
 fn main() {
-    let mut game_of_ttt = rust_mcts::tic_tac_toe::game::new();
+    use rust_mcts::game::Game;
+    use rust_mcts::game::Player;
+
+    let mut game_of_ttt = rust_mcts::tic_tac_toe::thing::GameOfTicTacToe::new();
     
     loop {
         print!("{}[2J", 27 as char);
         println!("{}", game_of_ttt);
 
-        println!("Player {} move!", game_of_ttt.current_player());
+        println!("Player {:?} move!", game_of_ttt.current_player());
         
         let possible_moves = game_of_ttt.get_possible_moves();
         println!("Possible moves are: {:?}", possible_moves);
@@ -26,7 +29,7 @@ fn main() {
         match possible_field_number {
             Ok(x @ 0 ..= 8) => {                
                 game_of_ttt.make_move(x);
-                game_of_ttt.toggle_current_player();
+                game_of_ttt.set_next_player();
             },
             Ok(_) => println!("Please provide number from range <1,8> or type 'quit' to exit."),
             Err(_) => {
@@ -40,8 +43,8 @@ fn main() {
             },
         }
 
-        if game_of_ttt.current_player_wins() {
-            println!("Player {} wins!", game_of_ttt.current_player());
+        if game_of_ttt.current_player_won() {
+            println!("Player {:?} wins!", game_of_ttt.current_player());
             println!("Type anything to quit.");
             io::stdin().read_line(&mut player_move).expect("Failed to read line");
             break;
