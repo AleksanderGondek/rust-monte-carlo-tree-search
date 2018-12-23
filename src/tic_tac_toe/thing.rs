@@ -47,7 +47,7 @@ impl Game for GameOfTicTacToe {
                     Some(ref mark) => {
                         all_positions_are_a_match = all_positions_are_a_match && (*mark == *self.current_player());
                     },
-                    _ => { ; },
+                    _ => { all_positions_are_a_match = false; break; },
                 }
             }
 
