@@ -32,17 +32,16 @@ fn main() {
             },
             y => {
                 game_of_ttt.make_move(y);
+                if game_of_ttt.current_player_won() {
+                    let mut any_input = String::new();
+                    println!("Player {:?} wins!", game_of_ttt.current_player());
+                    println!("Type anything to quit.");
+                    io::stdin().read_line(&mut any_input).expect("Failed to read line");
+                    break;
+                }
+
                 game_of_ttt.set_next_player();
             },
         }
-
-        if game_of_ttt.current_player_won() {
-            let mut any_input = String::new();
-            println!("Player {:?} wins!", game_of_ttt.current_player());
-            println!("Type anything to quit.");
-            io::stdin().read_line(&mut any_input).expect("Failed to read line");
-            break;
-        }
     }
 }
-    
