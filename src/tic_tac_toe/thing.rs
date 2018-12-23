@@ -16,13 +16,13 @@ static WINNING_POSITIONS: [[usize; 3]; 8] = [
 
 pub struct GameOfTicTacToe {
     board_state: [Option<Player>; 9],
-    current_player: Player,
+    current_player_index: usize,
     players: Vec<Player>,
 }
 
 impl Game for GameOfTicTacToe {
     fn current_player(&self) -> &Player {
-        return &self.current_player;
+        return &self.players[self.current_player_index];
     }
 
     fn current_player_won(&self) -> bool {
@@ -32,7 +32,7 @@ impl Game for GameOfTicTacToe {
             for index in winning_position.iter() {
                 match board[*index] {
                     Some(ref mark) => {
-                        all_positions_are_a_match = all_positions_are_a_match && (*mark == self.current_player);
+                        all_positions_are_a_match = all_positions_are_a_match && (*mark == *self.current_player());
                     },
                     _ => { ; },
                 }
@@ -46,6 +46,14 @@ impl Game for GameOfTicTacToe {
         return false;
     }
 
+    fn make_move(&mut self, move_to_make: String) {
+        match move_to_make.parse::<usize>() {
+            Ok(x) => {
+                 self.board_state[x % 9] = Some(self.current_player().clone());
+            },
+            Err(_) => { return; },
+        }
+    }
 
     fn possible_moves(&self) -> Vec<String> {
         let mut moves = Vec::new();
@@ -58,14 +66,18 @@ impl Game for GameOfTicTacToe {
         return moves;
     }
 
-    fn make_move(&mut self, move_to_make: String) {
-        match move_to_make.parse::<usize>() {
-            Ok(x) => {
-                 self.board_state[x % 9] = Some(self.current_player.clone());
+    fn set_next_player(&mut self) {
+        match self.current_player_index {
+            i if i <= (self.players.len() - 1) => {
+                self.current_player_index += 1;
             },
-            Err(_) => { return; },
+            i if i == self.players.len() => {
+                self.current_player_index = 0;
+            },
+            _ => { ; }
         }
     }
+
 }
 
 impl std::fmt::Display for GameOfTicTacToe {
