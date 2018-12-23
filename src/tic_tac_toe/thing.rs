@@ -20,6 +20,19 @@ pub struct GameOfTicTacToe {
     players: Vec<Player>,
 }
 
+impl GameOfTicTacToe {
+    pub fn new() -> GameOfTicTacToe {
+        GameOfTicTacToe {
+            board_state: [None, None, None, None, None, None, None, None, None],
+            current_player_index: 0,
+            players: vec![
+                Player::One(String::from("O")),
+                Player::One(String::from("X")),
+            ],
+        }
+    }
+}
+
 impl Game for GameOfTicTacToe {
     fn current_player(&self) -> &Player {
         return &self.players[self.current_player_index];
